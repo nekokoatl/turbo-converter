@@ -9,15 +9,15 @@ class ConverterVC: UIViewController, UITextFieldDelegate {
     @IBOutlet var celsiusLbl: UILabel!
     @IBOutlet var textField: UITextField!
     
-    @IBAction func farenheitFieldChanged (textfield: UITextField){
-        if let text =  textfield.text, value = Double(text) {
+    @IBAction func farenheitFieldChanged (_ textfield: UITextField){
+        if let text =  textfield.text, let value = Double(text) {
             farenheitValue = value
         } else {
             farenheitValue = nil
         }
     }
     
-    @IBAction func dissmissKeyboard(sender: AnyObject){
+    @IBAction func dissmissKeyboard(_ sender: AnyObject){
         textField.resignFirstResponder()
     }
     
@@ -36,9 +36,9 @@ class ConverterVC: UIViewController, UITextFieldDelegate {
     var image = UIImage(named: "pattern55.jpg")
 
     
-    let numberFormatter: NSNumberFormatter = {
-    let nf = NSNumberFormatter()
-        nf.numberStyle = .DecimalStyle
+    let numberFormatter: NumberFormatter = {
+    let nf = NumberFormatter()
+        nf.numberStyle = .decimal
         nf.minimumFractionDigits = 0
         nf.maximumFractionDigits = 1
         return nf
@@ -46,7 +46,7 @@ class ConverterVC: UIViewController, UITextFieldDelegate {
     
 
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         toggleImg()
         self.view.backgroundColor = UIColor(patternImage: image!)
@@ -62,15 +62,15 @@ class ConverterVC: UIViewController, UITextFieldDelegate {
     
     func updateCelsiusLbl(){
          if let value = celsiusValue {
-            celsiusLbl.text = numberFormatter.stringFromNumber(value)
+            celsiusLbl.text = numberFormatter.string(from: (value as NSNumber))
         } else {
             celsiusLbl.text = "???"
         }
     }
     
-    func textField(textField: UITextField, shouldChangeCharactersInRange range:NSRange, replacementString string: String) -> Bool {
-        let existingTextHasDecimalSeparator = textField.text?.rangeOfString(".")
-        let replacementTextHasDecimalSeparator = string.rangeOfString(".")
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range:NSRange, replacementString string: String) -> Bool {
+        let existingTextHasDecimalSeparator = textField.text?.range(of: ".")
+        let replacementTextHasDecimalSeparator = string.range(of: ".")
 
          if existingTextHasDecimalSeparator != nil && replacementTextHasDecimalSeparator != nil {
             return false

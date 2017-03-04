@@ -14,9 +14,9 @@ class WebVC: UIViewController {
         
         super.viewDidLoad()
         
-        let url = NSURL(string: "http://ya.ru")
+        let url = URL(string: "http://ya.ru")
         
-        let request = NSURLRequest(URL: url!)
+        let request = URLRequest(url: url!)
         
         webView.loadRequest(request)
         
